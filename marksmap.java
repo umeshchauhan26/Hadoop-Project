@@ -6,19 +6,19 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class marksmap extends Mapper<LongWritable, Text, IntWritable, IntWritable>
+public class marksmap extends Mapper<LongWritable, Text, IntWritable, Text>
 {
 	public void run(LongWritable key, Text value, Context context) throws IOException, InterruptedException
 	{
-		IntWritable marks=new IntWritable();
+		Text marks=new Text();
 		IntWritable rollNo=new IntWritable();
 		String temp=value.toString();
 		String[] arr=temp.split(",");
 		if(arr.length==2)
 		{
 			rollNo.set(Integer.parseInt(arr[0].trim()));
-			marks.set(Integer.parseInt(arr[1].trim()));
+			marks.set((arr[1].trim().toString()));
 		}
-		context.write(marks,rollNo);
+		context.write(rollNo,marks);
 	}
 }
